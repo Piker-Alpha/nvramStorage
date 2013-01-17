@@ -4,11 +4,29 @@
 # Script (daemon) to keep track of changes to NVRAM storage.
 #
 # Version 0.4 - Copyright (c) 2012 by RevoGirl <RevoGirl@rocketmail.com>
+# Version 0.5 - Copyright (c) 2013 by Pike <PikerAlpha@yahoo.com>
+#
+# Updates:
+#          - Injecting GUID:ROM and GUID:MLB for iMessage (PikerAlpha, January 2013)
 #
 
 #set -x # Used for tracing errors (can be put anywhere in the script).
 
 #================================= GLOBAL VARS ==================================
+
+#
+# Insert your MAC address here!
+#
+ROM="%01%02%03%04%05%06"
+
+#
+# Insert your Base Board Serial # here!
+#
+MLB="%01%02%03%04%05%06%07%08%09%0A%0B%0C%0D%0E%0F%10%11"
+
+GUID="4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+GUID_ROM="${GUID}:ROM=${ROM}"
+GUID_MLB="${GUID}:MLB=${MLB}"
 
 product=nvramStorage
 
@@ -68,6 +86,14 @@ function _updateNVRAM()
   _restoreNVRAMFromFile
 }
 
+#--------------------------------------------------------------------------------
+
+function _iMessageData()
+{
+  /usr/sbin/nvram $GUID_ROM
+  /usr/sbin/nvram $GUID_MLB
+}
+
 #==================================== START =====================================
 
 if [ $(_initialRun) -eq 1 ];
@@ -75,6 +101,7 @@ if [ $(_initialRun) -eq 1 ];
         echo "Restored" `/bin/date "+%d-%m-%Y @ %H:%M:%S"`
 
         _restoreNVRAMFromFile
+        _iMessageData
     else
         echo "Checked" `/bin/date "+ @ %H:%M:%S"`
 
