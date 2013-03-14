@@ -1,6 +1,11 @@
-; Copyright (c) 2012 by RevoGirl <RevoGirl@rocketmail.com>. All rights reserved.
+; Copyright (c) 2012 by RevoGirl. All rights reserved.
+; Copyright (c) 2013 by Pike R. Alpha. All rights reserved.
 ;
-; Sandbox profile (version 0.2) for: /Extra/NVRAM/nvramDaemon
+; Sandbox profile (version 0.3) for: /Extra/NVRAM/nvramDaemon
+;
+; Warning: This sandbox profile puts restrictions on the nvramDaemon,
+;          when properly launched from the launch daemon, preventing
+;          it from getting a potential attack vector (don't break it)
 ;
 
 (version 1)
@@ -45,7 +50,10 @@
        (literal "/bin/sh")
        (literal "/bin/cp")
        (literal "/bin/date")
+       (literal "/sbin/ifconfig")
        (literal "/sbin/md5")
+       (literal "/usr/bin/sed")
+       (literal "/usr/bin/tr")
        (literal "/usr/sbin/nvram")
        (literal "/Extra/NVRAM/Daemon/nvramDaemon"))
 
